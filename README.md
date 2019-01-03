@@ -8,6 +8,8 @@ format. The agent supports dynamic device registration and sending data events
 such as measurements, locations, and alerts to SiteWhere. It also supports receiving
 commands from SiteWhere and triggering Java logic based on the requests.
 
+**This documentation is in the process of being updated. Some of the sections below are out of date!**
+
 ## Agent Usage Example
 
 The agent project includes an example that shows how round-trip processing
