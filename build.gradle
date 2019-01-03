@@ -1,3 +1,5 @@
+description = 'SiteWhere Java Agent'
+
 buildscript {
 	repositories {
 		maven { url "https://plugins.gradle.org/m2/" }
@@ -8,38 +10,93 @@ buildscript {
 	}
 }
 
-apply plugin: 'distribution'
+group = 'com.sitewhere'
+version = '2.0.0'
+
+repositories {
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
     
-allprojects {
-    group = 'com.sitewhere'
-    version = '2.0.0'
-	
+apply plugin: 'java'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.sitewhere.agent.AgentLoader'
+	}
+}
+
+dependencies {
+	compile group: 'org.fusesource.mqtt-client', name: 'mqtt-client', version:'1.14'
+	compile group: 'com.sitewhere', name: 'sitewhere-device-protobuf', version:'2.0.1'
+	compile group: 'com.sitewhere', name: 'sitewhere-java-model', version: '2.0.0'
+    testCompile group: 'org.apache.activemq', name: 'activemq-all', version:'5.10.0'
+}
+
+// Check license headers.
+apply plugin: "com.github.hierynomus.license"
+license {
+	header rootProject.file('HEADER')
+	include "**/*.java"
+}
+
+// Support creating shadow jar.
+apply plugin: "com.github.johnrengelman.shadow"	
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+// Publish jar.	
+apply plugin: 'maven-publish'
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+		    from components.java
+            artifact sourcesJar
+            artifact javadocJar
+			pom {
+			    name = 'SiteWhere Java Agent'
+			    description = 'Java Agent for SiteWhere 2.0 CE'
+			    url = 'https://sitewhere.io'
+			    licenses {
+			        license {
+			            name = 'Apache License, Version 2.0'
+			            url = 'https://www.apache.org/licenses/LICENSE-2.0'
+			        }
+			    }
+                developers {
+                    developer {
+                        id = 'admin'
+                        name = 'SiteWhere Admin'
+                        email = 'admin@sitewhere.com'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/sitewhere/sitewhere-java-agent.git'
+                    url = 'https://github.com/sitewhere/sitewhere-java-agent'
+                }
+			}	
+		}
+	}
     repositories {
-        maven { url "http://repo.maven.apache.org/maven2" }
+        maven {
+            url project.nexusUrl
+            credentials {
+                username project.nexusUsername
+                password project.nexusPassword
+            }
+        }
     }
 }
 
-subprojects {
-	apply plugin: 'eclipse'
-		
-	apply plugin: "com.github.hierynomus.license"
-	license {
-		header rootProject.file('HEADER')
-    	include "**/*.java"
-	}
- 	
- 	// Choose Java settings.
-    apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-    
-    // Common dependencies used for all projects.
-    dependencies {
-        testCompile group: 'junit', name: 'junit'
-    }
-	test {
-	    exclude '**/*'
-	}
-	
-	apply plugin: "com.github.johnrengelman.shadow"	
+apply plugin: 'signing'
+signing {
+    sign publishing.publications.mavenJava
 }

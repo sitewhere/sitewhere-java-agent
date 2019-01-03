@@ -1,4 +1,0 @@
-rootProject.name = 'sitewhere-java-agent'
-include ':sitewhere-java-agent'
-
-project(':sitewhere-java-agent').projectDir = "$rootDir/sitewhere-java-agent" as File

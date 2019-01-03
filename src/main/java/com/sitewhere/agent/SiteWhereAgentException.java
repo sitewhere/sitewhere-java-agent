@@ -13,4 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+package com.sitewhere.agent;
+
+/**
+ * Generic SiteWhere Java Agent Exception.
+ * 
+ * @author Derek
+ */
+public class SiteWhereAgentException extends Exception {
+
+    private static final long serialVersionUID = 3351303154000958250L;
+
+    public SiteWhereAgentException() {
+    }
+
+    public SiteWhereAgentException(String message) {
+	super(message);
+    }
+
+    public SiteWhereAgentException(Throwable error) {
+	super(error);
+    }
+
+    public SiteWhereAgentException(String message, Throwable error) {
+	super(message, error);
+    }
+}
