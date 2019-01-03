@@ -128,7 +128,8 @@ At this point the device has registered with SiteWhere, SiteWhere has sent a com
 which executed Java code on the device, and the device sent a response to SiteWhere 
 which was correlated with the original command.
 
-###Building the Example
+### Building the Example
+
 The example agent is written in Java and may be compiled and packaged using 
 [Gradle](https://gradle.org/). Execute the following command to build and
 package the agent:
