@@ -1,12 +1,12 @@
 # SiteWhere Java Agent
 
-The SiteWhere Java agent provides a base client platform which runs on any 
+The SiteWhere Java agent provides a base client platform which runs on any
 device that supports Java. The agent allows a device to interact with
 SiteWhere over the MQTT transport by sending and receiving messages encoded
-in a [Google Protocol Buffers] (https://developers.google.com/protocol-buffers/) format. The agent supports dynamic 
-device registration and sending data events such as measurements, locations,
-and alerts to SiteWhere. It also supports receiving commands from SiteWhere
-and triggering Java logic based on the requests.
+in a [Google Protocol Buffers](https://developers.google.com/protocol-buffers/)
+format. The agent supports dynamic device registration and sending data events
+such as measurements, locations, and alerts to SiteWhere. It also supports receiving
+commands from SiteWhere and triggering Java logic based on the requests.
 
 ## Agent Usage Example
 
@@ -87,8 +87,11 @@ below:
 ```INI
 mqtt.hostname=localhost
 command.processor.classname=com.example.ExampleCommandProcessor
-device.hardware.id=123-TEST-439829343897429
-device.specification.token=7dfd6d63-5e8d-4380-be04-fc5c73801dfb
+tenant=default
+device.token=123-TEST-439829343897429
+area.token=southeast
+customer.token=acme
+device.type.token=galaxytab3
 ```
 
 If you are using a cloud instance for SiteWhere, edit the MQTT hostname to correspond to 
@@ -99,8 +102,10 @@ the Raspberry Pi specification in the default SiteWhere sample data.
 
 Start the agent by entering:
 
-    java -jar sitewhere-java-agent-x.y.z.jar
-    
+```sh
+java -jar sitewhere-java-agent-x.y.z.jar
+```
+
 Note that **x.y.z** above should be replaced by the version number of the agent. The
 agent will start and the logs produced in the console will reflect that the device
 has registered with SiteWhere successfully. The next step is to send a command from
@@ -125,11 +130,13 @@ which was correlated with the original command.
 
 ###Building the Example
 The example agent is written in Java and may be compiled and packaged using 
-[Gradle] (https://gradle.org/). Execute the following command to build and
+[Gradle](https://gradle.org/). Execute the following command to build and
 package the agent:
 
-    gradle clean shadowJar
-    
+```sh
+gradle clean shadowJar
+```
+
 The results of the build are located in the **build/libs** folder under the root. The jar
 file will be named **sitewhere-java-agent-x.y.z.jar** (where x.y.z is the version).
 Once built, the jar can be used as mentioned in the previous section to run the agent.
