@@ -43,7 +43,7 @@ public class Agent {
     private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
 
     /** Default outbound SiteWhere MQTT topic */
-    private static final String DEFAULT_MQTT_OUTBOUND_SITEWHERE = "SiteWhere/input/protobuf";    
+    private static final String DEFAULT_MQTT_OUTBOUND_SITEWHERE = "SiteWhere/%s/input/protobuf";    
 
     /** Default MQTT hostname */
     private static final String DEFAULT_MQTT_HOSTNAME = "localhost";
@@ -483,8 +483,9 @@ public class Agent {
 	// Validate outbound SiteWhere topic.
 	setOutboundSiteWhereTopic(properties.getProperty(IAgentConfiguration.MQTT_OUTBOUND_SITEWHERE_TOPIC));
 	if (getOutboundSiteWhereTopic() == null) {
-	    LOGGER.warning("Using default outbound SiteWhere MQTT topic: " + DEFAULT_MQTT_OUTBOUND_SITEWHERE);
-	    setOutboundSiteWhereTopic(DEFAULT_MQTT_OUTBOUND_SITEWHERE);
+	    String outboundTopic = buildOutboundTopic();
+	    LOGGER.warning("Using default outbound SiteWhere MQTT topic: " + outboundTopic);
+	    setOutboundSiteWhereTopic(outboundTopic);
 	}
 
 	// Validate inbound SiteWhere topic.
@@ -503,6 +504,11 @@ public class Agent {
 	    setInboundCommandTopic(in);
 	}
 	return true;
+    }
+
+    private String buildOutboundTopic() {
+	String outboundTopic = String.format(DEFAULT_MQTT_OUTBOUND_SITEWHERE, getTenant());
+	return outboundTopic;
     }
 
     /**

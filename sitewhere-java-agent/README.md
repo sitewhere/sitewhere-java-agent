@@ -31,7 +31,7 @@ declared as shown below that listens for this type of message:
 ```xml
 <!-- Event source for protobuf messages over MQTT -->
 <sw:mqtt-event-source sourceId="protobuf" hostname="localhost"
-	port="1883" topic="SiteWhere/input/protobuf">
+	port="1883" topic="SiteWhere/${tenanId}/input/protobuf">
 	<sw:protobuf-event-decoder/>
 </sw:mqtt-event-source>
 ```
