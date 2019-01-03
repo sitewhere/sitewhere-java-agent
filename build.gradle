@@ -21,15 +21,7 @@ allprojects {
 
 subprojects {
 	apply plugin: 'eclipse'
-	
-    // Use Spring dependency management.
- 	apply plugin: 'io.spring.dependency-management'
-	dependencyManagement {
-		imports {
-			mavenBom 'io.spring.platform:platform-bom:Cairo-SR1'
-		}
-	}
-	
+		
 	apply plugin: "com.github.hierynomus.license"
 	license {
 		header rootProject.file('HEADER')
