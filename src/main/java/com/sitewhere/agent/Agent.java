@@ -456,7 +456,7 @@ public class Agent {
 	LOGGER.info("Using configured customer token: " + getCustomerToken());
 
 	// Validate device type token.
-	setDeviceTypeToken(properties.getProperty(IAgentConfiguration.CUSTOMER_TOKEN));
+	setDeviceTypeToken(properties.getProperty(IAgentConfiguration.DEVICE_TYPE_TOKEN));
 	if (getDeviceTypeToken() == null) {
 	    LOGGER.severe("Device type token not specified in configuration.");
 	    return false;
